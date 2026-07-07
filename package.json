@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "description": "Local-first staking dashboard for NOX. Run it on your own machine, connect your own RPC and wallet, and stake without trusting a website.",
   "license": "AGPL-3.0-or-later",
-  "homepage": "https://github.com/eKisNonos/NOXDashboard",
+  "homepage": "https://github.com/NON-OS/NOXDashboard",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eKisNonos/NOXDashboard.git"
+    "url": "https://github.com/NON-OS/NOXDashboard.git"
   },
-  "bugs": "https://github.com/eKisNonos/NOXDashboard/issues",
+  "bugs": "https://github.com/NON-OS/NOXDashboard/issues",
   "keywords": [
     "nox",
     "nonos",

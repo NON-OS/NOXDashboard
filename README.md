@@ -29,7 +29,7 @@ so you can verify it against what you run yourself.
 ## Build it from source
 
 ```bash
-git clone https://github.com/eKisNonos/NOXDashboard.git
+git clone https://github.com/NON-OS/NOXDashboard.git
 cd NOXDashboard
 npm install
 npm run dev        # develop at http://127.0.0.1:5173
