@@ -29,8 +29,8 @@ so you can verify it against what you run yourself.
 ## Build it from source
 
 ```bash
-git clone https://github.com/NON-OS/nox-dashboard.git
-cd nox-dashboard
+git clone https://github.com/eKisNonos/NOXDashboard.git
+cd NOXDashboard
 npm install
 npm run dev        # develop at http://127.0.0.1:5173
 npm run build      # static bundle in dist/
