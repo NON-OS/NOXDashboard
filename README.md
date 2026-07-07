@@ -22,9 +22,12 @@ server to trust.
 
 ## Use the hosted copy
 
-If you just want a link, a convenience copy runs at
-<https://staking.nonos.software>. It serves the same build you get from `npx`,
-so you can verify it against what you run yourself.
+If you just want a link, a copy we host runs at
+<https://staking.nonos.software>. It serves the same static build you get from
+`npx`, so you can verify it against what you run yourself, and it still talks
+only to the RPC and wallet you choose. Running locally is the stronger position:
+nothing but your own machine is in the path. The hosted copy is a convenience we
+operate, with no telemetry and no fallback RPC.
 
 ## Build it from source
 
