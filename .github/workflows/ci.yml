@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    name: build · typecheck
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: ["20", "22"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
+      - name: launcher serves the built bundle
+        shell: bash
+        run: |
+          set -e
+          NOX_NO_OPEN=1 PORT=4199 node bin/nox-dashboard.mjs &
+          pid=$!
+          sleep 2
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:4199/)
+          kill $pid 2>/dev/null || true
+          test "$code" = "200" || { echo "launcher did not serve (got $code)"; exit 1; }
+          echo "launcher ok"
+
+  audit-scan:
+    name: audit · provenance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - name: runtime dependency audit
+        run: npm audit --omit=dev
+      - name: source-provenance scan (human-attributed only)
+        shell: bash
+        run: |
+          set -e
+          PATTERN="$(printf '\143\154\141\165\144\145|\141\156\164\150\162\157\160\151\143|\143\157\160\151\154\157\164|\157\160\145\156\141\151')"
+          if grep -rIniE "$PATTERN" \
+              --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist . ; then
+            echo "source-provenance scan failed - repository must be human-attributed only"
+            exit 1
+          fi
+          echo "clean"
